@@ -8,25 +8,17 @@ Given nums = [2, 7, 11, 15], target = 9,
 
 Because nums[0] + nums[1] = 2 + 7 = 9,
 return [0, 1].
+
 */
-
+//改了好几次，改少了很多代码，请原谅我的强迫症 */
 func twoSum(nums []int, target int) []int {
-	var res []int = make([]int, 2)
-	if len(nums) <= 1 {
-		return res
-	}
-
-
 	var tracker map[int]int = make(map[int]int, len(nums))
 	for i, v := range nums {
 		tv, ok := tracker[v]
-		if !ok {
-			tracker[target-v] = i
-		} else {
-			res[0] = tv
-			res[1] = i
-			break
+		if ok {
+            return []int{tv,i}
 		}
+        	tracker[target-v] = i
 	}
-	return res
+    return []int{}
 }
