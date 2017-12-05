@@ -18,7 +18,7 @@ func twoSum(nums []int, target int) []int {
 		if ok {
             return []int{tv,i}
 		}
-        	tracker[target-v] = i
+        tracker[target-v] = i
 	}
     return []int{}
 }
