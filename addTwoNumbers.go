@@ -1,4 +1,5 @@
 /**
+* 第一次，题目理解错误。再次感叹自己的水平实太水了..
  * Definition for singly-linked list.
  * type ListNode struct {
  *     Val int
@@ -6,13 +7,6 @@
  * }
  */
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
-    /*if l2 == nil || l2.Val == 0 {
-		return l1
-	}
-
-	if l1 == nil || l1.Val == 0 {
-		return l2
-	}*/
 	np1 := l1
 	list1 := list.New()
 	for np1 != nil {
@@ -53,4 +47,45 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 		sum /= 10
 	}
 	return &nd   
+}
+
+/*
+整型溢出，即使是把sum定义为int64还是没办法解决，只能改其他办法
+Input:
+[2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,9]
+[5,6,4,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,2,4,3,9,9,9,9]
+Output:
+[7,0,8,4,8,6,4,8,6,4,8,6,4,8,6,4,8,6,4]
+Expected:
+[7,0,8,4,8,6,4,8,6,4,8,6,4,8,6,4,8,6,4,8,6,4,8,6,4,8,6,4,8,6,4,8,6,4,8,6,4,8,6,4,8,6,4,8,6,4,8,6,4,8,6,4,8,6,4,8,6,1,4,3,9,1]
+*/
+func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+	sum := 0
+	idx := 0
+	for l1 != nil {
+		sum += int(math.Pow10(idx)) * l1.Val
+		idx++
+		l1 = l1.Next
+	}
+	idx = 0
+	for l2 != nil {
+		sum += int(math.Pow10(idx)) * l2.Val
+		idx++
+		l2 = l2.Next
+	}
+	if sum == 0 {
+		return &ListNode{Val: 0, Next: nil}
+	}
+	var head *ListNode = &ListNode{}
+	head.Val = -1
+	head.Next = nil
+	ndptr := head
+	for sum != 0 {
+		n := ListNode{}
+		n.Val = sum % 10
+		ndptr.Next = &n
+		ndptr = &n
+		sum /= 10
+	}
+	return head.Next
 }
