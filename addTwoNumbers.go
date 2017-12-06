@@ -89,3 +89,41 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 	}
 	return head.Next
 }
+
+/**
+* 去掉中间的sum累和的做法，PS:做了几道题之后，我以后不敢自称是程序员了
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+	var head *ListNode = &ListNode{}
+	head.Val = -1
+	head.Next = nil
+	ndptr := head
+	needPlus := false
+	for l1 != nil || l2 != nil || needPlus {
+		n := ListNode{}
+		ndptr.Next = &n
+		ndptr = &n
+		sum := 0
+		if l1 != nil {
+			sum += l1.Val
+			l1 = l1.Next
+		}
+		if l2 != nil {
+			sum += l2.Val
+			l2 = l2.Next
+		}
+		if needPlus {
+			sum++
+			needPlus = false
+		}
+		n.Val = sum % 10
+		if sum >= 10 {
+			needPlus = true
+		}
+	}
+	return head.Next
