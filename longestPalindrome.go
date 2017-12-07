@@ -28,6 +28,28 @@ func longestPalindrome(s string) string {
 	}
 	return s[start:end]
 }
+/*
+对回文的理解又错了一次，尼玛，写成首尾字符对应的算法了，菜鸡伤不起啊
+*/
+func longestPalindrome(s string) string {
+	if len(s) == 1 {
+		return s
+	}
+	var j, length, maxlen, start, end int = 0, len(s), 0, 0, 0
+	var set map[byte]int = make(map[byte]int)
+	for j < length {
+		i, ok := set[s[j]]
+		if ok {
+			if (j - i) > maxlen {
+				maxlen, start, end = j-i, i, j+1
+			}
+		} else {
+			set[s[j]] = j
+		}
+		j++
+	}
+	return s[start:end]
+}
 
 
 
