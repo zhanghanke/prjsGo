@@ -67,3 +67,27 @@ func lengthOfLongestSubstring(s string) int {
 	}
 	return maxlen
 }
+
+/*
+再次做了改进：当前指针发现前面重复的字符x，则后指针与x之间的指针是不需要一步步去比较的，可以一步就移动到x后面一个.  
+同时发现前面len == 0是多余的判断
+*/
+func lengthOfLongestSubstring2(s string) int {
+	var maxlen, start, current, length int = 0, 0, 0, len(s)
+	var set map[int]int = make(map[int]int)
+	for current < length {
+		ch := int(s[current])
+		v, ok := set[ch]
+		if ok {
+			if v > start {
+				start = v
+			}
+		}
+		if (current - start + 1) > maxlen {
+			maxlen = current - start + 1
+		}
+		set[ch] = current + 1
+		current++
+	}
+	return maxlen
+}
