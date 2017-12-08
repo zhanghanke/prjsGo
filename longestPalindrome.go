@@ -51,6 +51,32 @@ func longestPalindrome(s string) string {
 	return s[start:end]
 }
 
+/**
+* 正确理解题目后，按惯例来一个暴力算法测试，居然没有超时
+*/
+func isPalindrome(s string) bool {
+	middle := (len(s)+1)/2 - len(s)%2
+	for i := 0; i < middle; i++ {
+		if s[i] != s[len(s)-i-1] {
+			return false
+		}
+	}
+	return true
+}
+func longestPalindrome(s string) string {
+	max, start, end := 0, 0, 0
+	for i := 0; i < len(s); i++ {
+		for j := i; j < len(s); j++ {
+			if isPalindrome(s[i:(j + 1)]) {
+				if (j-i)+1 > max {
+					max, start, end = (j - i), i, (j + 1)
+
+				}
+			}
+		}
+	}
+	return s[start:end]
+}
 
 
 
