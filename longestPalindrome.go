@@ -78,5 +78,25 @@ func longestPalindrome(s string) string {
 	return s[start:end]
 }
 
+/*
+看了评论，用了动态规划DP
+*/
+func longestPalindrome(s string) string {
+	var n, start, end, max int = len(s), 0, 0, 0
+	var dp [1000][1000]bool
+	for i := 0; i < n; i++ {
+		for j := i; j >= 0; j-- {
+			if s[i] == s[j] && ((i-j) < 3 || dp[i-1][j+1]) {
+				dp[i][j] = true
+			}
+			if dp[i][j] && (i-j+1) > max {
+				max = i - j + 1
+				start = j
+				end = i + 1
+			}
+		}
+	}
+	return s[start:end]
+}
 
 
